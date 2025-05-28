@@ -20,9 +20,14 @@ artist = ["kaleo"]
 carl_url= []
 for i in artist:
     url= f"{base_url}/search?q={i}"
-    response = requests.get(url,headers=headers,verify=False)
+    response = requests.get(url, headers=headers, verify=False)
     soup = BeautifulSoup(response.text, 'html.parser')
-    data = soup.find_all('a',class_="link-primary link-offset-1 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover")
+    data = soup.find_all(
+        'a' ,
+        class_= "link-primary link-offset-1 link-offset-1-hover "
+                "link-underline link-underline-opacity-0 "
+                "link-underline-opacity-75-hover"
+                )
     for i in data:
         song_url = i.get("href")
         carl_url.append(f"{base_url}{song_url}")
@@ -37,22 +42,27 @@ for i_url in carl_url:
         response = requests.get(i_url,headers=headers,verify=False)
         soup = BeautifulSoup(response.text, 'html.parser')
         
-        link = soup.find('a', class_='d-inline-flex align-items-center gap-1 me-2 link-primary link-offset-1 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover')
+        link = soup.find(
+            'a' , 
+            class_= "d-inline-flex align-items-center gap-1 me-2 link-primary "
+            "link-offset-1 link-offset-1-hover link-underline "
+            "link-underline-opacity-0 link-underline-opacity-75-hover"
+            )
         artist_name = link.text
-        print("Имя исполнителя:",artist_name)
+        print("Имя исполнителя:", artist_name)
 
         link = soup.find('h1')
         song_title = link.text
-        print("Название песни:",song_title)
+        print("Название песни:", song_title)
 
         lyrics = soup.find('meta', itemprop="description")
         lyrics = str(lyrics).replace('<meta content=','').replace('itemprop="description"/>','')
         print(lyrics)
         
         
-        results_3 = soup.find('img',class_= "rounded border").get("src")
+        results_3 = soup.find('img', class_= "rounded border").get("src")
         url_img = f"{base_url}{results_3}"
-        response = requests.get(url_img,headers=headers,verify=False)
+        response = requests.get(url_img, headers=headers, verify=False)
         img = Image.open(io.BytesIO(response.content))
         display(img)
         #Сохранение изображений в папку
