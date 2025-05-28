@@ -11,7 +11,8 @@ import urllib3
 urllib3.disable_warnings()
 
 headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0) Gecko/20100101 Firefox/45.0'
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0) '
+        'Gecko/20100101 Firefox/45.0'
       }
 
 base_url = "https://tekstpesni.ru"
@@ -24,7 +25,7 @@ for i in artist:
     soup = BeautifulSoup(response.text, 'html.parser')
     data = soup.find_all(
         'a',
-        class_= "link-primary link-offset-1 link-offset-1-hover "
+        class_="link-primary link-offset-1 link-offset-1-hover "
                 "link-underline link-underline-opacity-0 "
                 "link-underline-opacity-75-hover"
                 )
@@ -44,7 +45,7 @@ for i_url in carl_url:
 
         link = soup.find(
             'a',
-            class_= "d-inline-flex align-items-center gap-1 me-2 link-primary "
+            class_="d-inline-flex align-items-center gap-1 me-2 link-primary "
             "link-offset-1 link-offset-1-hover link-underline "
             "link-underline-opacity-0 link-underline-opacity-75-hover"
             )
@@ -58,7 +59,7 @@ for i_url in carl_url:
         lyrics = soup.find('meta', itemprop="description")
         lyrics = str(lyrics).replace('<meta content=', '').replace('itemprop="description"/>', '')
         print(lyrics)
-        results_3 = soup.find('img', class_= "rounded border").get("src")
+        results_3 = soup.find('img', class_="rounded border").get("src")
         url_img = f"{base_url}{results_3}"
         response = requests.get(url_img, headers=headers, verify=False)
         img = Image.open(io.BytesIO(response.content))
